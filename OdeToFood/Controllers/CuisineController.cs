@@ -17,7 +17,7 @@ namespace OdeToFood.Controllers
         public ActionResult Search(string name)
         {
             var message = Server.HtmlEncode(name);
-            return File(Server.MapPath("~/Content/site.css"), "text/css");
+            return Json(new { Message = message, name = name, type = "typeVariable" }, JsonRequestBehavior.AllowGet);
         }
     }
 }
