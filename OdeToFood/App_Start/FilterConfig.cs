@@ -7,6 +7,7 @@ namespace OdeToFood
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
+            //HandleErrorAttribute is meant for showing a friendly error page to the user
             filters.Add(new HandleErrorAttribute());
         }
     }

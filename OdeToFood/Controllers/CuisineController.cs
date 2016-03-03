@@ -21,6 +21,8 @@ namespace OdeToFood.Controllers
         [Authorize]
         public ActionResult Search(string name)
         {
+            throw new Exception("Something went wrong ):");
+
             var message = Server.HtmlEncode(name);
             return Content(message);
         }
