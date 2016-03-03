@@ -17,7 +17,7 @@ namespace OdeToFood.Controllers
         public ActionResult Search(string name)
         {
             var message = Server.HtmlEncode(name);
-            return Content("You have made a search for: " + message);
+            return RedirectPermanent("http://www.google.com");
         }
     }
 }
