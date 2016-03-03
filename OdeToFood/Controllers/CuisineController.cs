@@ -14,10 +14,15 @@ namespace OdeToFood.Controllers
             return View();
         }
 
+        //[HttpPost] <- an ActionSelector that would restrict the method to being called via a post request
+        //Can be used to differentiate two different versions of an action
+
+        //[Authorize] <- forces the user to be logged in to carry out an action
+        [Authorize]
         public ActionResult Search(string name)
         {
             var message = Server.HtmlEncode(name);
-            return Json(new { Message = message, name = name, type = "typeVariable" }, JsonRequestBehavior.AllowGet);
+            return Content(message);
         }
     }
 }
