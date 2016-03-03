@@ -13,6 +13,17 @@ namespace OdeToFood
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            //An http request for /home/index would call the home-controller's action of index
+            //A request without an action would default to the index action
+
+            //We could make a specific route:
+            //This would override ../cuisine/xxx, if not matched, the url falls through to the next route
+            routes.MapRoute(
+                name: "cuisine",
+                url: "cuisine/{name}",
+                defaults: new { controller = "Cuisine", action = "Search", name = UrlParameter.Optional }
+            );
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
