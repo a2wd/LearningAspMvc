@@ -22,3 +22,19 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.review {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #222;
+}
+
+.review h4 {
+    border-radius: 2px;
+    background-color: #222;
+    color: #fff;
+    padding: 5px;
+}
+
+.right {
+    float: right;
+}

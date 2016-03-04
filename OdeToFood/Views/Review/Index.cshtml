@@ -1,0 +1,25 @@
+﻿@model IEnumerable<OdeToFood.Models.RestaurantReview>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@* A razor comment! *@
+@* Using a double-at sign, we can escape razor: @@myTwitterHandle *@
+
+@section featured {
+    <h2>The Latest reviews</h2>
+    <p>We are showing the latest @Model.Count() reviews</p>
+}
+
+@foreach (var item in Model)
+{
+    //Most common way to render a partial
+    //Can only pass model information to partial
+    @Html.Partial("_Review", item)
+}
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
