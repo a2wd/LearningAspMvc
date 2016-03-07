@@ -199,6 +199,7 @@
     <Compile Include="Controllers\CuisineController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\RestaurantsController.cs" />
     <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Filters\LogAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -283,6 +284,12 @@
     <Content Include="Views\Review\Index.cshtml" />
     <Content Include="Views\Review\Edit.cshtml" />
     <Content Include="Views\Review\_Review.cshtml" />
+    <Content Include="Views\Restaurants\Create.cshtml" />
+    <Content Include="Views\Restaurants\Delete.cshtml" />
+    <Content Include="Views\Restaurants\Edit.cshtml" />
+    <Content Include="Views\Restaurants\Index.cshtml" />
+    <Content Include="Views\Review\_Reviews.cshtml" />
+    <Content Include="Views\Review\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
