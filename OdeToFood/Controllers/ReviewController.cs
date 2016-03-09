@@ -53,13 +53,20 @@ namespace OdeToFood.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(RestaurantReview review)
+        public ActionResult Edit([Bind(Exclude ="ReviewerName")]RestaurantReview review)
         {
-            if(ModelState.IsValid)
+            //Re-populate reviewer name
+            var originalReview = _db.Reviews.AsNoTracking().Where(r => r.Id == review.Id).FirstOrDefault();
+            if (originalReview != null)
             {
-                _db.Entry(review).State = EntityState.Modified;
-                _db.SaveChanges();
-                return RedirectToAction("Index", new { id = review.RestaurantId });
+                review.ReviewerName = originalReview.ReviewerName;
+
+                if (ModelState.IsValid)
+                {
+                    _db.Entry(review).State = EntityState.Modified;
+                    _db.SaveChanges();
+                    return RedirectToAction("Index", new { id = review.RestaurantId });
+                }
             }
 
             return View(review);
