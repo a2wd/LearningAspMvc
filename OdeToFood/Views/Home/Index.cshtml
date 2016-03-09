@@ -1,4 +1,4 @@
-﻿@model IEnumerable<OdeToFood.Models.RestaurantListViewModel>
+﻿@model IPagedList<RestaurantListViewModel>
 
 @{
     ViewBag.Title = "Home Page";
@@ -7,19 +7,26 @@
 <div class="jumbotron">
     <h1>Restaurants!</h1>
     <p class="lead">Feel free to search!</p>
-    <form method="get">
+
+    @* ==With a standard form==
+        <form method="get">
+            <input type="search" name="searchTerm" />
+            <input type="submit" value="Search by name" />
+        </form>
+    *@
+
+    @* ==With an Ajax using==
+            @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "get", InsertionMode = InsertionMode.Replace, UpdateTargetId = "restaurantList" }))
+        {
+           <input type="search" name="searchTerm" />
+           <input type="submit" value="Search by name" />
+        }*@
+
+    @* == With the ajax helper functions== *@
+    <form method="get" action="@Url.Action("Index")" data-otf-ajax="true" data-otf-target="restaurantList" data-otf-autocomplete="@Url.Action("Autocomplete")">
         <input type="search" name="searchTerm" />
         <input type="submit" value="Search by name" />
     </form>
 </div>
 
-<div class="row">
-    @foreach (var item in Model)
-    {
-        <div class="col-md-4">
-            <h2>@item.Name</h2>
-            <p>@item.City, @item.Country</p>
-            <p>Count of reviews: @item.CountOfReviews</p>
-        </div>
-    }
-</div>
+@Html.Partial("_Restaurants", Model)

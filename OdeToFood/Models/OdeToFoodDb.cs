@@ -15,5 +15,7 @@ namespace OdeToFood.Models
 
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<RestaurantReview> Reviews { get; set; }
+
+        public System.Data.Entity.DbSet<OdeToFood.Models.RestaurantListViewModel> RestaurantListViewModels { get; set; }
     }
 }
