@@ -12,6 +12,7 @@ namespace OdeToFood.Models
         [Range(1,10)]
         //Int values are required by default[Required]
         public int Rating { get; set; }
+        //[Required(ErrorMessageResourceType = typeof(OdeToFood.Views.Home.Resources), ErrorMessageResourceName = "Error"]
         [Required]
         [StringLength(1024)]
         public string Body { get; set; }

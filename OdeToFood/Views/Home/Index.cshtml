@@ -29,4 +29,21 @@
     </form>
 </div>
 
+@Html.Action("SayHello")
+<div>
+    @OdeToFood.Views.Home.Resources.Greeting
+</div>
+
+@{
+    var amount = 10.0m;
+    var someDate = new DateTime(2002, 7, 9);
+}
+
+<div>
+    @amount.ToString("c")
+</div>
+<div>
+    @someDate.ToShortDateString()
+</div>
+
 @Html.Partial("_Restaurants", Model)

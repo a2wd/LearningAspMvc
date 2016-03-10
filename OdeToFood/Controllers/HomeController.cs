@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
+using System.Web.UI;
 
 namespace OdeToFood.Controllers
 {
@@ -24,6 +25,18 @@ namespace OdeToFood.Controllers
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
+        [ChildActionOnly]
+        [OutputCache(Duration =60)]
+        public ActionResult SayHello()
+        {
+            return Content("Hello");
+        }
+
+
+        //Using a chache profile from web.config
+        [OutputCache(CacheProfile = "Short", VaryByHeader = "X-Requested-With; Accept-Language", Location = OutputCacheLocation.Server)]
+        //Special caching - vary by header in case of bookmarked paaging result, in conjunction with server-side only caching
+        //[OutputCache(Duration = 60, VaryByHeader = "X-Requested-With", Location = OutputCacheLocation.Server)]
         public ActionResult Index(string searchTerm = null, int page = 1)
         {
             //var model =
@@ -57,6 +70,7 @@ namespace OdeToFood.Controllers
                 _db.Restaurants
                     .OrderByDescending(r => r.Reviews.Average(review => review.Rating))
                     .Where(r => searchTerm == null || r.Name.StartsWith(searchTerm))
+                    .Take(100)
                     .ToList()
                     .Select(r => new RestaurantListViewModel
                     {
