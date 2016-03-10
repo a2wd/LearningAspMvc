@@ -36,6 +36,27 @@ namespace OdeToFood.Migrations
                 context.Restaurants.AddOrUpdate(r => r.Name,
                     new Restaurant { Name = i.ToString(), City = "No Hope", Country = "Great Britain" });
             }
+
+            SeedMembership();
+        }
+
+        private void SeedMembership()
+        {
+            ////Using WebMatrix
+            //WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+
+            //var roles = (SimpleRoleProvider)roles.Provider;
+            //var membership = (SimpleMembershipProvide)membership.Provider;
+
+            //if(!roles.RoleExits("Admin"))
+            //{
+            //    roles.CreateRole("Admin");
+            //}
+            //if(membership.GetUser("sallen", false) == null)
+            //{
+            //    membership.CreateUserAndAccount("sallen", "imalittleteapot");
+            //}
+            ////etc.
         }
     }
 }

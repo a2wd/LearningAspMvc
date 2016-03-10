@@ -8,6 +8,8 @@ using PagedList;
 
 namespace OdeToFood.Controllers
 {
+    //[Authorize(Users="bob@bob.com", "sallen")]
+    //[Authorize(Roles="administrators","sales")]
     public class HomeController : Controller
     {
         OdeToFoodDb _db = new OdeToFoodDb();
@@ -73,6 +75,8 @@ namespace OdeToFood.Controllers
             return View(model);
         }
 
+        // This could be here or on the class [Authorize]
+        // [AllowAnonymous] could override an [Authorize] on the main class
         public ActionResult About()
         {
             var model = new AboutModel();
