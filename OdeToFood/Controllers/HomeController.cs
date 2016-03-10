@@ -13,11 +13,21 @@ namespace OdeToFood.Controllers
     //[Authorize(Roles="administrators","sales")]
     public class HomeController : Controller
     {
-        OdeToFoodDb _db = new OdeToFoodDb();
+        IOdeToFoodDb _db;
+
+        public HomeController()
+        {
+            _db = new OdeToFoodDb();
+        }
+
+        public HomeController(IOdeToFoodDb db)
+        {
+            _db = db;
+        }
 
         public ActionResult AutoComplete(string term)
         {
-            var model = _db.Restaurants
+            var model = _db.Query<Restaurant>()
                 .Where(r => r.Name.StartsWith(term))
                 .Take(10)
                 .Select(r => new { label = r.Name });
@@ -67,7 +77,7 @@ namespace OdeToFood.Controllers
 
             //Only main bonus of lambdas & extensions is the ability to use extra functions like skip() or take()
             var model =
-                _db.Restaurants
+                _db.Query<Restaurant>()
                     .OrderByDescending(r => r.Reviews.Average(review => review.Rating))
                     .Where(r => searchTerm == null || r.Name.StartsWith(searchTerm))
                     .Take(100)

@@ -1,9 +1,8 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using OdeToFood.Models;
@@ -12,45 +11,58 @@ namespace OdeToFood.Controllers
 {
     public class RestaurantsController : Controller
     {
-        private OdeToFoodDb db = new OdeToFoodDb();
+        private IOdeToFoodDb _db;
 
-        // GET: Restaurants
-        public ActionResult Index()
+        public RestaurantsController()
         {
-            return View(db.Restaurants.ToList());
+            _db = new OdeToFoodDb();
         }
 
-        // GET: Restaurants/Create
+        public RestaurantsController(IOdeToFoodDb db)
+        {
+            _db = db;
+        }
+
+        //
+        // GET: /Restaurant/
+
+        public ActionResult Index()
+        {
+            return View(_db.Query<Restaurant>().ToList());
+        }
+
+          //
+        // GET: /Restaurant/Create
+        [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Restaurants/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //
+        // POST: /Restaurant/Create
+
         [HttpPost]
+        [Authorize(Roles="admin")]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,City,Country")] Restaurant restaurant)
+        public ActionResult Create(Restaurant restaurant)
         {
             if (ModelState.IsValid)
             {
-                db.Restaurants.Add(restaurant);
-                db.SaveChanges();
+                _db.Add(restaurant);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             return View(restaurant);
         }
 
-        // GET: Restaurants/Edit/5
-        public ActionResult Edit(int? id)
+        //
+        // GET: /Restaurant/Edit/5
+
+        public ActionResult Edit(int id = 0)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Restaurant restaurant = db.Restaurants.Find(id);
+            Restaurant restaurant = _db.Query<Restaurant>().Single(r => r.Id == id);
             if (restaurant == null)
             {
                 return HttpNotFound();
@@ -58,30 +70,27 @@ namespace OdeToFood.Controllers
             return View(restaurant);
         }
 
-        // POST: Restaurants/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //
+        // POST: /Restaurant/Edit/5
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,City,Country")] Restaurant restaurant)
+        public ActionResult Edit(Restaurant restaurant)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(restaurant).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Update(restaurant);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(restaurant);
         }
 
-        // GET: Restaurants/Delete/5
-        public ActionResult Delete(int? id)
+        //
+        // GET: /Restaurant/Delete/5
+
+        public ActionResult Delete(int id = 0)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Restaurant restaurant = db.Restaurants.Find(id);
+            Restaurant restaurant = _db.Query<Restaurant>().Single(r => r.Id == id);
             if (restaurant == null)
             {
                 return HttpNotFound();
@@ -89,23 +98,21 @@ namespace OdeToFood.Controllers
             return View(restaurant);
         }
 
-        // POST: Restaurants/Delete/5
+        //
+        // POST: /Restaurant/Delete/5
+
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Restaurant restaurant = db.Restaurants.Find(id);
-            db.Restaurants.Remove(restaurant);
-            db.SaveChanges();
+            var restaurant = _db.Query<Restaurant>().Single(r => r.Id == id);
+            _db.Remove(restaurant);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
+            _db.Dispose();
             base.Dispose(disposing);
         }
     }

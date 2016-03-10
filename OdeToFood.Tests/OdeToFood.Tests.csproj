@@ -37,6 +37,7 @@
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\OdeToFood\bin\System.Web.Mvc.dll</HintPath>
@@ -57,8 +58,16 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Controllers\RestaurantControllerTests.cs" />
+    <Compile Include="Fakes\FakeControllerContext.cs" />
+    <Compile Include="Fakes\FakeOdeToFoodDb.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
+    <Compile Include="Features\IRatingAlgorithm.cs" />
+    <Compile Include="Features\RatingResult.cs" />
+    <Compile Include="Features\RestaurantRater.cs" />
+    <Compile Include="Features\RatingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestData.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OdeToFood\OdeToFood.csproj">
