@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using System.Web.UI;
+using System.Configuration;
 
 namespace OdeToFood.Controllers
 {
@@ -49,6 +50,9 @@ namespace OdeToFood.Controllers
         //[OutputCache(Duration = 60, VaryByHeader = "X-Requested-With", Location = OutputCacheLocation.Server)]
         public ActionResult Index(string searchTerm = null, int page = 1)
         {
+            //Example setting 
+            ViewBag.ExampleConfiguration = ConfigurationManager.AppSettings["SomeExampleKey"];
+
             //var model =
             //    from r in _db.Restaurants
             //    orderby r.Reviews.Count() descending
